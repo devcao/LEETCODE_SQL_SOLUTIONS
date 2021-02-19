@@ -19,13 +19,15 @@ Trick: 1. use limit 1 offset 1 (offset 1 means remove the 1st row)
        2. need to return NULL(exact NULL not empty string) when there is only 1 record (use ifnull)
        3. need to return NULL is there are 2 records with same salary (use distinct)
 
-Solution 1:
+* Solution 1:
+
 SELECT Ifnull((SELECT DISTINCT salary AS SecondHighestSalary
                FROM   employee
                ORDER  BY salary DESC
                LIMIT  1 offset 1), NULL) AS SecondHighestSalary 
 
-Solution 2 (faster)
+* Solution 2 (faster)
+
 SELECT Max(salary) AS SecondHighestSalary
 FROM   employee
 WHERE  salary != (SELECT Max(salary) AS max_salary
